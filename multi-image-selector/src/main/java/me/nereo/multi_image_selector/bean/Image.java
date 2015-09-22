@@ -5,14 +5,10 @@ package me.nereo.multi_image_selector.bean;
  * Created by Nereo on 2015/4/7.
  */
 public class Image {
-    public String path;
-    public String name;
-    public long time;
+    public final String path;
 
-    public Image(String path, String name, long time){
+    public Image(String path) {
         this.path = path;
-        this.name = name;
-        this.time = time;
     }
 
     @Override
@@ -20,7 +16,7 @@ public class Image {
         try {
             Image other = (Image) o;
             return this.path.equalsIgnoreCase(other.path);
-        }catch (ClassCastException e){
+        } catch (ClassCastException e) {
             e.printStackTrace();
         }
         return super.equals(o);

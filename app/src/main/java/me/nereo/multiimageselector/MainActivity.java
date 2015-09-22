@@ -1,32 +1,44 @@
 package me.nereo.multiimageselector;
 
+import java.util.ArrayList;
+
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
+import me.nereo.multi_image_selector.utils.Constants;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE = 2;
-
-    private TextView mResultText;
     private RadioGroup mChoiceMode, mShowCamera;
-    private EditText mRequestNum;
-
+    private EditText          mRequestNum;
+    private TextView          mResultText;
     private ArrayList<String> mSelectPath;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == RESULT_OK) {
+                mSelectPath = data.getStringArrayListExtra(Constants.EXTRA_RESULT);
+                StringBuilder sb = new StringBuilder();
+                for (String p : mSelectPath) {
+                    sb.append(p);
+                    sb.append("\n");
+                }
+                mResultText.setText(sb.toString());
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +53,9 @@ public class MainActivity extends ActionBarActivity {
         mChoiceMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                if(checkedId == R.id.multi){
+                if (checkedId == R.id.multi) {
                     mRequestNum.setEnabled(true);
-                }else{
+                } else {
                     mRequestNum.setEnabled(false);
                     mRequestNum.setText("");
                 }
@@ -54,31 +66,31 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View view) {
 
-                int selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+                int selectedMode;
 
-                if(mChoiceMode.getCheckedRadioButtonId() == R.id.single){
-                    selectedMode = MultiImageSelectorActivity.MODE_SINGLE;
-                }else{
-                    selectedMode = MultiImageSelectorActivity.MODE_MULTI;
+                if (mChoiceMode.getCheckedRadioButtonId() == R.id.single) {
+                    selectedMode = Constants.MODE_SINGLE;
+                } else {
+                    selectedMode = Constants.MODE_MULTI;
                 }
 
                 boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
 
                 int maxNum = 9;
-                if(!TextUtils.isEmpty(mRequestNum.getText())){
+                if (! TextUtils.isEmpty(mRequestNum.getText())) {
                     maxNum = Integer.valueOf(mRequestNum.getText().toString());
                 }
 
                 Intent intent = new Intent(MainActivity.this, MultiImageSelectorActivity.class);
                 // 是否显示拍摄图片
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, showCamera);
+                intent.putExtra(Constants.EXTRA_SHOW_CAMERA, showCamera);
                 // 最大可选择图片数量
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, maxNum);
+                intent.putExtra(Constants.EXTRA_SELECT_COUNT, maxNum);
                 // 选择模式
-                intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, selectedMode);
+                intent.putExtra(Constants.EXTRA_SELECT_MODE, selectedMode);
                 // 默认选择
-                if(mSelectPath != null && mSelectPath.size()>0){
-                    intent.putExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+                if (mSelectPath != null && mSelectPath.size() > 0) {
+                    intent.putExtra(Constants.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
                 }
                 startActivityForResult(intent, REQUEST_IMAGE);
 
@@ -92,22 +104,6 @@ public class MainActivity extends ActionBarActivity {
                 startActivity(intent);
             }
         });*/
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_IMAGE){
-            if(resultCode == RESULT_OK){
-                mSelectPath = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                StringBuilder sb = new StringBuilder();
-                for(String p: mSelectPath){
-                    sb.append(p);
-                    sb.append("\n");
-                }
-                mResultText.setText(sb.toString());
-            }
-        }
     }
 
     @Override
