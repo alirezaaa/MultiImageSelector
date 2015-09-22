@@ -1,70 +1,62 @@
 # MultiImageSelector
-Image selector for Android device. Support single choice and multi-choice.
+Image selector for Android which supports single and multiple choices.
 
-[中文文档](README_zh.md)
-
-###ART
+## Screenshots
 ![Example1](art/example_1.png) ![Select1](art/select_1.png) ![Select2](art/select_2.png) ![Select3](art/select_3.png)
 
 -------------------
 
-###Run Demo
+## Quick Start
+* Add module `multi-image-selector` as your dependence.
+* Declare permission `android.permission.READ_EXTERNAL_STORAGE` in your `AndroidManifest.xml` .
+* Declare `MultiImageSelectorActivity` in your `AndroidManifest.xml`.
 
->./gradlew installDebug
-
-###Quick Start
-* Step 0
-Add module `multi-image-selector` as your dependence.
-
-* Step 1 
-Declare  permission `android.permission.READ_EXTERNAL_STORAGE` in your `AndroidManifest.xml` .
-Declare `MultiImageSelectorActivity` in your `AndroidManifest.xml` .
 ```xml
 <activity
     android:configChanges="orientation|screenSize"
     android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity" />
 ```
 
-* Step 2
-Call image selector activity in your code, eg.
-``` java
-Intent intent = new Intent(mContext, MultiImageSelectorActivity.class);
+* Call image selector activity in your code, eg.
+```java
+Intent intent = new Intent(context, MultiImageSelectorActivity.class);
 
-// whether show camera
+// Whether show camera
 intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
 
-// max select image amount
+// Max select image amount
 intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
 
-// select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
+// Select mode (MultiImageSelectorActivity.MODE_SINGLE OR MultiImageSelectorActivity.MODE_MULTI)
 intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_MULTI);
+
+// Whether log (true by default)
+intent.putExtra(MultiImageSelectorActivity.EXTRA_LOG, false);
 
 startActivityForResult(intent, REQUEST_IMAGE);
 ```
 
-* Step 3
-Receive result in your `onActivityResult` Method. eg.
+* Receive result in your `onActivityResult` method. eg.
 ```java
 @Override
 protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     super.onActivityResult(requestCode, resultCode, data);
     if(requestCode == REQUEST_IMAGE){
         if(resultCode == RESULT_OK){
-	        // Get the result list of select image paths
-            List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-            // do your logic ....
+	          // Get the list of selected images paths
+            List<String> paths = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+            // Do your logic...
+        }
+        else {
+          // Result has canceled
         }
     }
 }
 ```
 
-* Step 4
-No more steps, just enjoy. :)
-
 -------------------
 
-###Custom Activity Style
-* Custome your own Activity
+## Implement Callback
 ```java
 class CustomerActivity extends Activity implements MultiImageSelectorFragment.Callback{
 	@Override
@@ -86,12 +78,12 @@ class CustomerActivity extends Activity implements MultiImageSelectorFragment.Ca
 
     @Override
     public void onImageSelected(String path) {
-        // You can specify your ActionBar behavior here 
+        // You can specify your ActionBar behavior here
     }
 
     @Override
     public void onImageUnselected(String path) {
-        // You can specify your ActionBar behavior here 
+        // You can specify your ActionBar behavior here
     }
 
     @Override
@@ -100,11 +92,13 @@ class CustomerActivity extends Activity implements MultiImageSelectorFragment.Ca
     }
 }
 ```
-* Take a glance of `MultiImageSelectorActivity.java`
 
 -------------------
 
-###Change Log
+## Changelog
+* September 22, 2015
+  1. Whether log or not
+  2. Minor improvements
 
 * 2015-5-5
     1. Fixed. Can't display some images. (Issue by[sd6352051](https://github.com/sd6352051), [larry](https://github.com/18611480882))
@@ -123,13 +117,12 @@ class CustomerActivity extends Activity implements MultiImageSelectorFragment.Ca
 
 -------------------
 
-###Thanks
-
-* [square-picasso](https://github.com/square/picasso) A powerful image downloading and caching library for Android 
+## Thanks
+* [square-picasso](https://github.com/square/picasso) A powerful image downloading and caching library for Android
 
 -------------------
 
-###License
+## License
 >The MIT License (MIT)
 
 >Copyright (c) 2015 Nereo
