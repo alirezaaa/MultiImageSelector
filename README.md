@@ -4,8 +4,6 @@ Image selector for Android which supports single and multiple choices.
 ## Screenshots
 ![Example1](art/example_1.png) ![Select1](art/select_1.png) ![Select2](art/select_2.png) ![Select3](art/select_3.png)
 
--------------------
-
 ## Quick Start
 * Add module `multi-image-selector` as your dependence.
 * Declare permission `android.permission.READ_EXTERNAL_STORAGE` in your `AndroidManifest.xml` .
@@ -54,8 +52,6 @@ protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 }
 ```
 
--------------------
-
 ## Implement Callback
 ```java
 class CustomerActivity extends Activity implements MultiImageSelectorFragment.Callback{
@@ -93,8 +89,6 @@ class CustomerActivity extends Activity implements MultiImageSelectorFragment.Ca
 }
 ```
 
--------------------
-
 ## Changelog
 * September 22, 2015
   1. Whether log or not
@@ -115,12 +109,8 @@ class CustomerActivity extends Activity implements MultiImageSelectorFragment.Ca
     1. Fixed. When set `EXTRA_SHOW_CAMERA` to `true`, the first grid item onclick event were messed.
     2. Add. Support initial selected image list.
 
--------------------
-
 ## Thanks
 * [square-picasso](https://github.com/square/picasso) A powerful image downloading and caching library for Android
-
--------------------
 
 ## License
 >The MIT License (MIT)
