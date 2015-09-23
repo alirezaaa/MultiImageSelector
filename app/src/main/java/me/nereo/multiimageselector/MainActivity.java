@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 import me.nereo.multi_image_selector.utils.Constants;
 
@@ -19,9 +21,24 @@ import me.nereo.multi_image_selector.utils.Constants;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE = 2;
-    private RadioGroup mChoiceMode, mShowCamera;
-    private EditText          mRequestNum;
-    private TextView          mResultText;
+    @Bind (R.id.button)
+    Button      button;
+    @Bind (R.id.choice_mode)
+    RadioGroup  mChoiceMode;
+    @Bind (R.id.request_num)
+    EditText    mRequestNum;
+    @Bind (R.id.result)
+    TextView    mResult;
+    @Bind (R.id.show_camera)
+    RadioGroup  mShowCamera;
+    @Bind (R.id.multi)
+    RadioButton multi;
+    @Bind (R.id.no_show)
+    RadioButton noShow;
+    @Bind (R.id.show)
+    RadioButton show;
+    @Bind (R.id.single)
+    RadioButton single;
     private ArrayList<String> mSelectPath;
 
     @Override
@@ -35,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     sb.append(p);
                     sb.append("\n");
                 }
-                mResultText.setText(sb.toString());
+                mResult.setText(sb.toString());
             }
         }
     }
@@ -44,11 +61,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mResultText = (TextView) findViewById(R.id.result);
-        mChoiceMode = (RadioGroup) findViewById(R.id.choice_mode);
-        mShowCamera = (RadioGroup) findViewById(R.id.show_camera);
-        mRequestNum = (EditText) findViewById(R.id.request_num);
+        ButterKnife.bind(this);
 
         mChoiceMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -61,40 +74,36 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+    @OnClick (R.id.button)
+    public void onButtonClick() {
+        int selectedMode;
 
-                int selectedMode;
+        if (mChoiceMode.getCheckedRadioButtonId() == R.id.single) {
+            selectedMode = Constants.MODE_SINGLE;
+        } else {
+            selectedMode = Constants.MODE_MULTI;
+        }
 
-                if (mChoiceMode.getCheckedRadioButtonId() == R.id.single) {
-                    selectedMode = Constants.MODE_SINGLE;
-                } else {
-                    selectedMode = Constants.MODE_MULTI;
-                }
+        boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
 
-                boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
+        int maxNum = 9;
+        if (! TextUtils.isEmpty(mRequestNum.getText())) {
+            maxNum = Integer.valueOf(mRequestNum.getText().toString());
+        }
 
-                int maxNum = 9;
-                if (! TextUtils.isEmpty(mRequestNum.getText())) {
-                    maxNum = Integer.valueOf(mRequestNum.getText().toString());
-                }
-
-                Intent intent = new Intent(MainActivity.this, MultiImageSelectorActivity.class);
-                // 是否显示拍摄图片
-                intent.putExtra(Constants.EXTRA_SHOW_CAMERA, showCamera);
-                // 最大可选择图片数量
-                intent.putExtra(Constants.EXTRA_SELECT_COUNT, maxNum);
-                // 选择模式
-                intent.putExtra(Constants.EXTRA_SELECT_MODE, selectedMode);
-                // 默认选择
-                if (mSelectPath != null && mSelectPath.size() > 0) {
-                    intent.putExtra(Constants.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
-                }
-                startActivityForResult(intent, REQUEST_IMAGE);
-
-            }
-        });
+        Intent intent = new Intent(MainActivity.this, MultiImageSelectorActivity.class);
+        // 是否显示拍摄图片
+        intent.putExtra(Constants.EXTRA_SHOW_CAMERA, showCamera);
+        // 最大可选择图片数量
+        intent.putExtra(Constants.EXTRA_SELECT_COUNT, maxNum);
+        // 选择模式
+        intent.putExtra(Constants.EXTRA_SELECT_MODE, selectedMode);
+        // 默认选择
+        if (mSelectPath != null && mSelectPath.size() > 0) {
+            intent.putExtra(Constants.EXTRA_DEFAULT_SELECTED_LIST, mSelectPath);
+        }
+        startActivityForResult(intent, REQUEST_IMAGE);
     }
 }

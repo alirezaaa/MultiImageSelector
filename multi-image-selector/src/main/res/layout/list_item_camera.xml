@@ -9,9 +9,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:drawablePadding="10dp"
-        android:drawableTop="@drawable/ic_photo_camera"
+        android:drawableTop="@drawable/ic_camera"
         android:gravity="center_horizontal"
-        android:text="@string/take_picture"
+        android:text="@string/take_photo"
         android:textColor="#CDCECE"
         android:textSize="14sp" />
 
