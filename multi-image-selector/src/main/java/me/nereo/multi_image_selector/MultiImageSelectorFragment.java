@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -49,8 +50,8 @@ import me.nereo.multi_image_selector.utils.TimeUtils;
  */
 public class MultiImageSelectorFragment extends Fragment {
     // 文件夹数据
-    private final ArrayList<Folder> mResultFolder = new ArrayList<>();
-    private boolean hasFolderGened = false;
+    private final ArrayList<Folder> mResultFolder  = new ArrayList<>();
+    private       boolean           hasFolderGened = false;
     private Callback        mCallback;
     // 类别
     private TextView        mCategoryText;
@@ -63,9 +64,9 @@ public class MultiImageSelectorFragment extends Fragment {
     private ImageGridAdapter mImageAdapter;
     private boolean mIsShowCamera = false;
     // 底部View
-    private View   mPopupAnchorView;
+    private View     mPopupAnchorView;
     // 预览按钮
-    private Button mPreviewBtn;
+    private Button   mPreviewBtn;
     // 时间线
     private TextView mTimeLineText;
     private File     mTmpFile;
@@ -99,8 +100,6 @@ public class MultiImageSelectorFragment extends Fragment {
                     data.moveToFirst();
                     do {
                         String path = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[0]));
-                        String name = data.getString(data.getColumnIndexOrThrow(IMAGE_PROJECTION[1]));
-                        long dateTime = data.getLong(data.getColumnIndexOrThrow(IMAGE_PROJECTION[2]));
                         Image image = new Image(path);
                         images.add(image);
                         if (! hasFolderGened) {
@@ -165,10 +164,10 @@ public class MultiImageSelectorFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            mCallback = (Callback) activity;
+            mCallback = (Callback) context;
         } catch (ClassCastException e) {
             throw new ClassCastException("The Activity must implement MultiImageSelectorFragment.Callback interface...");
         }
@@ -430,8 +429,9 @@ public class MultiImageSelectorFragment extends Fragment {
                     }
                 } else {
                     // 判断选择数量问题
-                    if (mDesireImageCount == resultList.size()) {
-                        Toast.makeText(getActivity(), R.string.msg_amount_limit, Toast.LENGTH_SHORT)
+                    // If mDesireImageCount is -1, it means unlimited
+                    if (mDesireImageCount != - 1 && mDesireImageCount == resultList.size()) {
+                        Toast.makeText(getActivity(), String.format(getString(R.string.msg_amount_limit), mDesireImageCount), Toast.LENGTH_SHORT)
                              .show();
                         return;
                     }

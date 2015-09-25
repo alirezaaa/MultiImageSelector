@@ -37,4 +37,6 @@ public class Constants {
     // 请求加载系统照相机
     public static final int    REQUEST_CAMERA              = 100;
     public static final String TAG                         = "MultiImageSelector";
+    // Default selecting images count
+    public static final int DEFAULT_SELECTING_COUNT = -1;
 }
