@@ -41,7 +41,11 @@ public class MultiImageSelectorActivity extends FragmentActivity
         }
         // 有图片之后，改变按钮状态
         if (resultList.size() > 0) {
-            mSubmitButton.setText(String.format(getString(R.string.complete_with_size), resultList.size(), mDefaultCount));
+            // If selecting images is not unlimited, displays complete with size string.
+            if (mDefaultCount != - 1) {
+                mSubmitButton.setText(String.format(getString(R.string.complete_with_size), resultList
+                        .size(), mDefaultCount));
+            }
             if (! mSubmitButton.isEnabled()) {
                 mSubmitButton.setEnabled(true);
             }
@@ -124,7 +128,7 @@ public class MultiImageSelectorActivity extends FragmentActivity
 
         // 完成按钮
         mSubmitButton = (Button) findViewById(R.id.commit);
-        if (resultList == null || resultList.size() <= 0) {
+        if (resultList == null || resultList.size() <= 0 || mDefaultCount == - 1) {
             mSubmitButton.setText(getString(R.string.complete));
             mSubmitButton.setEnabled(false);
         } else {

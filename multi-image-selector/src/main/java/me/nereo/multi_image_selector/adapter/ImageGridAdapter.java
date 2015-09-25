@@ -71,18 +71,18 @@ public class ImageGridAdapter extends BaseAdapter {
             view = mInflater.inflate(R.layout.list_item_camera, viewGroup, false);
             view.setTag(null);
         } else if (type == TYPE_NORMAL) {
-            ViewHolde holde;
+            ViewHolder holder;
             if (view == null) {
                 view = mInflater.inflate(R.layout.list_item_image, viewGroup, false);
-                holde = new ViewHolde(view);
+                holder = new ViewHolder(view);
             } else {
-                holde = (ViewHolde) view.getTag();
-                if (holde == null) {
+                holder = (ViewHolder) view.getTag();
+                if (holder == null) {
                     view = mInflater.inflate(R.layout.list_item_image, viewGroup, false);
-                    holde = new ViewHolde(view);
+                    holder = new ViewHolder(view);
                 }
             }
-            holde.bindData(getItem(i));
+            holder.bindData(getItem(i));
         }
 
         /** Fixed View Size */
@@ -205,12 +205,12 @@ public class ImageGridAdapter extends BaseAdapter {
         showSelectIndicator = b;
     }
 
-    class ViewHolde {
+    class ViewHolder {
         final ImageView image;
         final ImageView indicator;
         final View      mask;
 
-        ViewHolde(View view) {
+        ViewHolder(View view) {
             image = (ImageView) view.findViewById(R.id.image);
             indicator = (ImageView) view.findViewById(R.id.checkmark);
             mask = view.findViewById(R.id.mask);
