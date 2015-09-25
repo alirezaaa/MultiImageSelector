@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,7 +19,7 @@ import me.nereo.multi_image_selector.utils.Constants;
 public class MultiImageSelectorActivity extends FragmentActivity
         implements MultiImageSelectorFragment.Callback {
 
-    private int    mDefaultCount;
+    private int mDefaultCount = - 1;
     private Button mSubmitButton;
     private ArrayList<String> resultList = new ArrayList<>();
 
@@ -53,10 +52,8 @@ public class MultiImageSelectorActivity extends FragmentActivity
     public void onImageUnselected(String path) {
         if (resultList.contains(path)) {
             resultList.remove(path);
-            mSubmitButton.setText(String.format(getString(R.string.complete_with_size), resultList.size(), mDefaultCount));
-        } else {
-            mSubmitButton.setText(String.format(getString(R.string.complete_with_size), resultList.size(), mDefaultCount));
         }
+        mSubmitButton.setText(String.format(getString(R.string.complete_with_size), resultList.size(), mDefaultCount));
         // 当为选择图片时候的状态
         if (resultList.size() == 0) {
             mSubmitButton.setText(getString(R.string.complete));
@@ -79,7 +76,7 @@ public class MultiImageSelectorActivity extends FragmentActivity
         setContentView(R.layout.activity_default);
 
         Intent intent = getIntent();
-        mDefaultCount = intent.getIntExtra(Constants.EXTRA_SELECT_COUNT, 9);
+        mDefaultCount = intent.getIntExtra(Constants.EXTRA_SELECT_COUNT, Constants.DEFAULT_SELECTING_COUNT);
         int mode = intent.getIntExtra(Constants.EXTRA_SELECT_MODE, Constants.MODE_MULTI);
 
         // If multi mode selected but pass 1 as default count, consider single mode
@@ -90,12 +87,7 @@ public class MultiImageSelectorActivity extends FragmentActivity
                 }
                 // Throw an exception if multiple choice mode selected with 0 default count
                 else if (mDefaultCount == 0) {
-                    try {
-                        throw new Exception(getString(R.string.zero_multi_illegal));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        finish();
-                    }
+                    throw new IllegalStateException(getString(R.string.zero_multi_illegal));
                 }
             }
         }

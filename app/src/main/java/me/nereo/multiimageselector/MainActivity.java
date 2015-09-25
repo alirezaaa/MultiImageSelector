@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         // 是否显示拍摄图片
         intent.putExtra(Constants.EXTRA_SHOW_CAMERA, showCamera);
         // 最大可选择图片数量
-        intent.putExtra(Constants.EXTRA_SELECT_COUNT, maxNum);
+        intent.putExtra(Constants.EXTRA_SELECT_COUNT, -1);
         // 选择模式
         intent.putExtra(Constants.EXTRA_SELECT_MODE, selectedMode);
         // 默认选择

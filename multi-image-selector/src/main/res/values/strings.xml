@@ -3,7 +3,7 @@
     <string name="folder_all">All Images</string>
     <string name="preview">Preview</string>
     <string name="msg_no_camera">No system camera found</string>
-    <string name="msg_amount_limit">Select images amount is limit</string>
+    <string name="msg_amount_limit">Select images amount is limit (limited to %1$d)</string>
     <string name="complete">Complete</string>
     <string name="complete_with_size">Complete (%1$d/%2$d)</string>
     <string name="preview_with_size">Preview (%1$d)</string>
