@@ -17,7 +17,7 @@
         android:text="@string/select_mode"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <RadioGroup
         android:id="@+id/choice_mode"
@@ -31,13 +31,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/mode_single" />
+            android:text="@string/mode_single"/>
 
         <RadioButton
             android:id="@+id/multi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mode_multi" />
+            android:text="@string/mode_multi"/>
 
     </RadioGroup>
 
@@ -47,7 +47,7 @@
         android:text="@string/max_select_amount"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/request_num"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:enabled="false"
         android:hint="@string/hint_default_amount"
-        android:inputType="number" />
+        android:inputType="number"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -63,7 +63,7 @@
         android:text="@string/enable_camera"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"/>
 
     <RadioGroup
         android:id="@+id/show_camera"
@@ -76,13 +76,13 @@
             android:id="@+id/show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/enable" />
+            android:text="@string/enable"/>
 
         <RadioButton
             android:id="@+id/no_show"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/disable" />
+            android:text="@string/disable"/>
 
     </RadioGroup>
 
@@ -90,7 +90,7 @@
         android:id="@+id/button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/go_select" />
+        android:text="@string/go_select"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -99,7 +99,7 @@
         <TextView
             android:id="@+id/result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"/>
 
     </ScrollView>
 

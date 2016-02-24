@@ -1,7 +1,5 @@
 package me.nereo.multiimageselector;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +9,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -21,23 +22,23 @@ import me.nereo.multi_image_selector.utils.Constants;
 public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_IMAGE = 2;
-    @Bind (R.id.button)
-    Button      button;
-    @Bind (R.id.choice_mode)
-    RadioGroup  mChoiceMode;
-    @Bind (R.id.request_num)
-    EditText    mRequestNum;
-    @Bind (R.id.result)
-    TextView    mResult;
-    @Bind (R.id.show_camera)
-    RadioGroup  mShowCamera;
-    @Bind (R.id.multi)
+    @Bind(R.id.button)
+    Button button;
+    @Bind(R.id.choice_mode)
+    RadioGroup mChoiceMode;
+    @Bind(R.id.request_num)
+    EditText mRequestNum;
+    @Bind(R.id.result)
+    TextView mResult;
+    @Bind(R.id.show_camera)
+    RadioGroup mShowCamera;
+    @Bind(R.id.multi)
     RadioButton multi;
-    @Bind (R.id.no_show)
+    @Bind(R.id.no_show)
     RadioButton noShow;
-    @Bind (R.id.show)
+    @Bind(R.id.show)
     RadioButton show;
-    @Bind (R.id.single)
+    @Bind(R.id.single)
     RadioButton single;
     private ArrayList<String> mSelectPath;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @OnClick (R.id.button)
+    @OnClick(R.id.button)
     public void onButtonClick() {
         int selectedMode;
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         boolean showCamera = mShowCamera.getCheckedRadioButtonId() == R.id.show;
 
         int maxNum = 9;
-        if (! TextUtils.isEmpty(mRequestNum.getText())) {
+        if (!TextUtils.isEmpty(mRequestNum.getText())) {
             maxNum = Integer.valueOf(mRequestNum.getText().toString());
         }
 
@@ -98,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(Constants.EXTRA_SHOW_CAMERA, showCamera);
         // 最大可选择图片数量
         intent.putExtra(Constants.EXTRA_SELECT_COUNT, !mRequestNum.getText().toString().isEmpty() ?
-                        Integer
-                .parseInt(mRequestNum.getText().toString()) : Constants.DEFAULT_SELECTING_COUNT);
+                Integer
+                        .parseInt(mRequestNum.getText().toString()) : Constants.DEFAULT_SELECTING_COUNT);
         // 选择模式
         intent.putExtra(Constants.EXTRA_SELECT_MODE, selectedMode);
         // 默认选择
